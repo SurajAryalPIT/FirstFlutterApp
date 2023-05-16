@@ -76,33 +76,42 @@ class _AddPostScreenState extends State<AddPostScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            productList.isNotEmpty
-                ? DropdownButton<String>(
-                    value: productDropDownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (String? value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        moduleList = [];
-                        productDropDownValue = value!;
-                      });
-                      loadModuleList();
-                    },
-                    items: productList
-                        .map<DropdownMenuItem<String>>((Product value) {
-                      return DropdownMenuItem<String>(
-                        value: value.name,
-                        child: Text(value.name),
-                      );
-                    }).toList(),
-                  )
-                : Text("Loading..."),
+            // Product List
+            Row(
+              children: [
+                Text(
+                  "Select Product: ",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                productList.isNotEmpty
+                    ? DropdownButton<String>(
+                        value: productDropDownValue,
+                        icon: const Icon(Icons.arrow_downward),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        onChanged: (String? value) {
+                          // This is called when the user selects an item.
+                          setState(() {
+                            moduleList = [];
+                            productDropDownValue = value!;
+                          });
+                          loadModuleList();
+                        },
+                        items: productList
+                            .map<DropdownMenuItem<String>>((Product value) {
+                          return DropdownMenuItem<String>(
+                            value: value.name,
+                            child: Text(value.name),
+                          );
+                        }).toList(),
+                      )
+                    : Text("Loading..."),
+              ],
+            ),
             // Module List
             moduleList.isNotEmpty
                 ? DropdownButton<String>(
