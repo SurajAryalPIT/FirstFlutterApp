@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:supporttools/controlers/post_controller.dart';
+import 'package:supporttools/models/get_project_response_model.dart';
 import 'package:supporttools/models/login_response_models.dart';
 import 'package:supporttools/views/login_screen.dart';
 
 import '../data.dart';
+import 'add_post_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   LoginResponseModel rm;
   HomeScreen(this.rm);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Current User: ${rm.data.userName}"),
+          title: Text("Current User: ${widget.rm.data.userName}"),
           actions: [IconButton(onPressed: () {}, icon: Icon(Icons.settings))],
         ),
         drawer: Drawer(
@@ -55,78 +63,9 @@ class HomeScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
             onPressed: () {
-              showDialog<void>(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Post Record'),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "Project Selector"),
-                        ),
-                        TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "Project Selector"),
-                        ),
-                        TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "Project Selector"),
-                        ),
-                        TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "Project Selector"),
-                        ),
-                        TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "Project Selector"),
-                        ),
-                        TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "Project Selector"),
-                        ),
-                        TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "Project Selector"),
-                        ),
-                        TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "Project Selector"),
-                        ),
-                        TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "Project Selector"),
-                        ),
-                        TextFormField(
-                          decoration:
-                              InputDecoration(hintText: "Project Selector"),
-                        )
-                      ],
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          textStyle: Theme.of(context).textTheme.labelLarge,
-                        ),
-                        child: const Text('Save'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          textStyle: Theme.of(context).textTheme.labelLarge,
-                        ),
-                        child: const Text('Cancel'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => AddPostScreen()),
               );
             }),
         body: ListView.builder(
