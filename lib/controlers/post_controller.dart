@@ -5,7 +5,8 @@ import 'package:supporttools/models/login_request_model.dart';
 import 'package:supporttools/models/login_response_models.dart';
 import 'package:supporttools/models/module_list_request.dart';
 import 'package:supporttools/models/module_list_response.dart';
-
+import 'package:supporttools/models/post_request_model.dart';
+import 'package:supporttools/models/post_response_model.dart';
 import '../config.dart';
 import '../models/common_request_token.dart';
 import '../models/get_project_response_model.dart';
@@ -85,6 +86,30 @@ class PostController {
       } else {
         Utils.showToast("Failed");
         throw Exception('Failed to login');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  // Post Request
+  Future<PostResponseModel> addPost(PostRequestModel postRequestModel) async {
+    try {
+      final response = await http.post(
+        Uri.parse(APPConfig.BASE_URL + "PosLogin/SaveBUG"),
+        body: postRequestModelToJson(postRequestModel),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        Utils.showToast("Success");
+        PostResponseModel loginResponseModel =
+            postResponseModelFromJson(response.body);
+        return loginResponseModel;
+      } else {
+        Utils.showToast("Failed");
+        throw Exception('Failed to Save.');
       }
     } catch (e) {
       throw Exception(e.toString());
